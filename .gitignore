@@ -1,0 +1,5 @@
+# Node.js dependencies
+node_modules/
+
+# Python3 -m venv venv
+venv/
