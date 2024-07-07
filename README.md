@@ -47,7 +47,7 @@ module.exports = app;
 
 # 1-4 creating the init file
 
-# english-learning-platform/backend/flask/app/__init__.py
+ english-learning-platform/backend/flask/app/__init__.py
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -66,7 +66,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
-# Routes will be imported here
+ Routes will be imported here
 
 if __name__ == '__main__':
     app.run(debug=True)
