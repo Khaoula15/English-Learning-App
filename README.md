@@ -98,13 +98,17 @@ Open your browser and navigate to `http://localhost:8080` to access the English 
 english-learning-app/
 ├── backend/
 │   ├── models/
+│   |      └── User.js
 │   ├── routes/
+|   |       ├── auth.js
+|   │       └── lessons.js
 │   ├── server.js
 │   └── .env
 └── frontend/
     ├── src/
     │   ├── assets/
     │   ├── components/
+    │   │       └── Header.vue
     │   ├── router/
     │   ├── store/
     │   ├── views/
