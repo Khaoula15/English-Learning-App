@@ -1,3 +1,4 @@
+<!-- src/components/Footer.vue -->
 <template>
   <footer class="English-Learning-App-footer">
     <div class="language-selector">
@@ -6,28 +7,33 @@
         <option value="en">English</option>
         <option value="fr">Français</option>
         <option value="es">Español</option>
-        <option value="ch">Chinese</option>
-        <option value="ar">Arabic</option>
-        <option value="ko">Korean</option>
-        <option value="ja">Japanese</option>
-        <!-- Add more language options as needed -->
+        <option value="ch">中文</option>
+        <option value="ar">العربية</option>
+        <option value="ko">한국어</option>
+        <option value="ja">日本語</option>
       </select>
     </div>
     <p>{{ $t('footerText') }}</p>
+    <ChatbotPopup />
   </footer>
 </template>
 
 <script>
 import { useI18n } from 'vue-i18n'
+import ChatbotPopup from './ChatbotPopup.vue'
 
 export default {
   name: 'Footer',
+  components: {
+    ChatbotPopup
+  },
   setup () {
     const { t } = useI18n()
     return { t }
   }
 }
 </script>
+
 
 <style scoped>
 .app-footer {

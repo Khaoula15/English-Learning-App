@@ -108,11 +108,21 @@ english-learning-app/
     ├── src/
     │   ├── assets/
     │   ├── components/
-    │   │       └── Header.vue
+    │   |       ├── Header.vue
+    │   │       └── Footer.vue
     │   ├── router/
+    │   |      └── index.js
     │   ├── store/
+    │   |      └── index.js
     │   ├── views/
+    │   |      ├── HomeView.vue
+    │   |      ├── LessonDetailView.vue
+    │   |      ├── LessonsView.vue
+    │   |      ├── LoginView.vue
+    │   |      ├── RegisterView.vue
+    │   |      └── PortfolioView.vue
     │   ├── App.vue
+    │   ├── i18n.js
     │   ├── main.js
     │   └── Header.vue
     ├── public/
@@ -151,4 +161,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - https://github.com/BadrRibzat/English-Learning-App.git
 
-This `README.md` provides a comprehensive overview of the project, including setup instructions, project structure, and usage details. If you need any additional information or modifications, feel free to ask!
+This `README.md` provides a comprehensive overview of the project, including setup instructions, project structure, and usage details. 
+
+- Chatbot popup integrated with i18n
+- Quick tour feature for new users
+
+### Chatbot Usage
+The chatbot can be accessed from the footer. It supports multiple languages based on the current locale.
+
