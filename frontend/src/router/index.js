@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import LessonsView from '@/views/LessonsView.vue';
-import LessonDetailView from '@/views/LessonDetailView.vue'; // Import the new LessonDetailView
-import LoginView from '@/views/LoginView.vue';
-import RegisterView from '@/views/RegisterView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/views/HomeView.vue'
+import LessonsView from '@/views/LessonsView.vue'
+import LessonDetailView from '@/views/LessonDetailView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import PortfolioView from '@/views/PortfolioView.vue'
 
 const routes = [
   {
@@ -30,12 +31,17 @@ const routes = [
     path: '/register',
     name: 'RegisterPage',
     component: RegisterView
-  }
-];
+  },
+  {
+    path: '/portfolio',
+    name: 'PortfolioPage',
+    component: PortfolioView
+   },
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-});
+})
 
-export default router;
+export default router

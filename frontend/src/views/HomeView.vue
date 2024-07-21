@@ -7,20 +7,20 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'HomePage', // Corresponds to the router name
-  setup() {
-    const router = useRouter();
+  setup () {
+    const router = useRouter()
 
     const startLearning = () => {
-      router.push('/lessons');
-    };
+      router.push('/lessons')
+    }
 
-    return { startLearning };
+    return { startLearning }
   }
-};
+}
 </script>
 
 <style scoped>

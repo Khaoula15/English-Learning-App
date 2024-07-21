@@ -1,0 +1,15 @@
+{
+  "language": "语言",
+  "footerText": "© 2024 您的应用名称。保留所有权利。",
+  "lessonTitle": "课程 {number}",
+  "backToLessons": "返回课程",
+  "flashcards": "抽认卡",
+  "typeAnswer": "在此输入您的答案",
+  "submit": "提交",
+  "correct": "正确！",
+  "incorrect": "错误。请再试一次。",
+  "tryAgain": "再试一次",
+  "lessons": "课程",
+  "lessonDescription": "描述",
+  "startLesson": "开始课程"
+}

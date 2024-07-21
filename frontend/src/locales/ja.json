@@ -1,0 +1,15 @@
+{
+  "language": "言語",
+  "footerText": "© 2024 あなたのアプリ名。すべての権利を保留します。",
+  "lessonTitle": "レッスン {number}",
+  "backToLessons": "レッスンに戻る",
+  "flashcards": "フラッシュカード",
+  "typeAnswer": "ここに回答を入力してください",
+  "submit": "送信",
+  "correct": "正解！",
+  "incorrect": "不正解。もう一度試してください。",
+  "tryAgain": "もう一度試す",
+  "lessons": "レッスン",
+  "lessonDescription": "説明",
+  "startLesson": "レッスンを開始"
+}

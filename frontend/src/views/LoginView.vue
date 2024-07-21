@@ -11,36 +11,36 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 export default {
   name: 'LoginPage',
-  setup() {
-    const email = ref('');
-    const password = ref('');
-    const error = ref(null);
-    const store = useStore();
-    const router = useRouter();
+  setup () {
+    const email = ref('')
+    const password = ref('')
+    const error = ref(null)
+    const store = useStore()
+    const router = useRouter()
 
     const login = async () => {
       try {
         const response = await axios.post('/auth/login', {
           email: email.value,
           password: password.value
-        });
-        store.commit('setToken', response.data.token);
-        router.push('/lessons');
+        })
+        store.commit('setToken', response.data.token)
+        router.push('/lessons')
       } catch (err) {
-        error.value = err.response.data.message;
+        error.value = err.response.data.message
       }
-    };
+    }
 
-    return { email, password, error, login };
+    return { email, password, error, login }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -12,16 +12,16 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref } from 'vue'
+import axios from 'axios'
 
 export default {
   name: 'RegisterView',
-  setup() {
-    const name = ref('');
-    const email = ref('');
-    const password = ref('');
-    const error = ref(null);
+  setup () {
+    const name = ref('')
+    const email = ref('')
+    const password = ref('')
+    const error = ref(null)
 
     const register = async () => {
       try {
@@ -29,16 +29,16 @@ export default {
           name: name.value,
           email: email.value,
           password: password.value
-        });
-        this.$router.push('/login');
+        })
+        this.$router.push('/login')
       } catch (err) {
-        error.value = err.response.data.message;
+        error.value = err.response.data.message
       }
-    };
+    }
 
-    return { name, email, password, error, register };
+    return { name, email, password, error, register }
   }
-};
+}
 </script>
 
 <style scoped>

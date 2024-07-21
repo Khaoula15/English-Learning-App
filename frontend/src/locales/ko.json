@@ -1,0 +1,15 @@
+{
+  "language": "언어",
+  "footerText": "© 2024 귀하의 앱 이름. 모든 권리 보유.",
+  "lessonTitle": "수업 {number}",
+  "backToLessons": "수업으로 돌아가기",
+  "flashcards": "플래시 카드",
+  "typeAnswer": "여기에 답변을 입력하세요",
+  "submit": "제출",
+  "correct": "정답입니다!",
+  "incorrect": "틀렸습니다. 다시 시도하세요.",
+  "tryAgain": "다시 시도",
+  "lessons": "수업",
+  "lessonDescription": "설명",
+  "startLesson": "수업 시작"
+}

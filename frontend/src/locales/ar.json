@@ -1,0 +1,15 @@
+{
+  "language": "لغة",
+  "footerText": "© 2024 اسم تطبيقك. جميع الحقوق محفوظة.",
+  "lessonTitle": "الدرس {number}",
+  "backToLessons": "العودة إلى الدروس",
+  "flashcards": "بطاقات الذاكرة",
+  "typeAnswer": "اكتب إجابتك هنا",
+  "submit": "إرسال",
+  "correct": "صحيح!",
+  "incorrect": "خطأ. حاول مرة أخرى.",
+  "tryAgain": "حاول مرة أخرى",
+  "lessons": "الدروس",
+  "lessonDescription": "الوصف",
+  "startLesson": "بدء الدرس"
+}

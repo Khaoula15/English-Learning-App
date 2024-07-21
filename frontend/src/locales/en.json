@@ -1,0 +1,15 @@
+{
+  "language": "Language",
+  "footerText": "© 2024 Your App Name. All rights reserved.",
+  "lessonTitle": "Lesson {number}",
+  "backToLessons": "Back to Lessons",
+  "flashcards": "Flashcards",
+  "typeAnswer": "Type your answer here",
+  "submit": "Submit",
+  "correct": "Correct!",
+  "incorrect": "Incorrect. Try again.",
+  "tryAgain": "Try Again",
+  "lessons": "Lessons",
+  "lessonDescription": "Description",
+  "startLesson": "Start Lesson"
+}
