@@ -158,7 +158,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```
 
 ### Notes
-
+'''
 - https://github.com/BadrRibzat/English-Learning-App.git
 
 This `README.md` provides a comprehensive overview of the project, including setup instructions, project structure, and usage details. 
@@ -166,6 +166,42 @@ This `README.md` provides a comprehensive overview of the project, including set
 - Chatbot popup integrated with i18n
 - Quick tour feature for new users
 
+'''
+
 ### Chatbot Usage
+'''
 The chatbot can be accessed from the footer. It supports multiple languages based on the current locale.
+
+'''
+# Payment Integration with Stripe
+
+This is the detailed process covers the implementation of a payment feature using Stripe in the application with the backend.
+
+## Prerequisites
+
+## Stripe account and API keys:
+
+1. Creating an account and get your public and secret keys
+
+## Backend Setup
+2. Install Stripe
+
+   You should have strip, install Stripe library in the backend:
+
+   ```bash
+   npm install stripe
+  ```
+3. Create a new file on the routes of the backend
+```bash
+   backend/routes/payments.js
+```
+4. Add Route to Server.js file
+
+## Frontend Setup
+
+1. Install Stripe.js
+```bash
+  npm install @stripe/stripe-js
+```
+2. Update Payment View file
 

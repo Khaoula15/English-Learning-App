@@ -1,5 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const checkPayment = (req, res, next) => {
+	 if (req.params.id == 3) {
+	   const user = req.user;
+	   if (user && user.hasPaid) {
+	     return next();
+    } else {
+      return res.status(403).json({ message: 'Access denied. Please purchase the lesson.' });
+    }
+  }
+  next();
+};
+
 
 // Sample lessons data (you should replace this with a database query in a real application)
 const lessons = [
@@ -28,7 +40,7 @@ router.get('/', (req, res) => {
 });
 
 // Get a specific lesson by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', checkPayment, (req, res) => {
   const lessonId = parseInt(req.params.id);
   const lesson = lessons.find(l => l.id === lessonId);
   if (lesson) {
@@ -39,7 +51,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Get flashcards for a specific lesson
-router.get('/:id/flashcards', (req, res) => {
+router.get('/:id/flashcards', checkPayment, (req, res) => {
   const lessonId = parseInt(req.params.id);
   // For simplicity, returning the same flashcards for all lessons
   if (lessonId >= 1 && lessonId <= lessons.length) {

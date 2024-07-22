@@ -103,7 +103,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .lesson-detail {
   max-width: 800px;
