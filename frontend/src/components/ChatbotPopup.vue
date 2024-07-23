@@ -1,4 +1,4 @@
-<!-- src/components/ChatbotPopup.vue -->
+<!-- src/components/ChatbotPopup.vue-->
 <template>
   <div class="chatbot-popup" :class="{ 'is-open': isOpen }">
     <div class="chatbot-header" @click="toggleChat">
@@ -22,6 +22,7 @@
 <script>
 import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import axios from 'axios'
 
 export default {
   name: 'ChatbotPopup',
@@ -55,19 +56,23 @@ export default {
       userInput.value = ''
     }
 
-    const processUserMessage = (message) => {
-      // Simple bot logic - expand this as needed
-      const lowercaseMessage = message.toLowerCase()
-      if (lowercaseMessage.includes('hello') || lowercaseMessage.includes('hi')) {
-        addMessage('bot', t('chatbot.greeting'))
-      } else if (lowercaseMessage.includes('lesson')) {
-        addMessage('bot', t('chatbot.lessonInfo'))
-      } else if (lowercaseMessage.includes('register') || lowercaseMessage.includes('sign up')) {
-        addMessage('bot', t('chatbot.registerInfo'))
-      } else if (lowercaseMessage.includes('login') || lowercaseMessage.includes('sign in')) {
-        addMessage('bot', t('chatbot.loginInfo'))
-      } else {
-        addMessage('bot', t('chatbot.defaultResponse'))
+    const processUserMessage = async (message) => {
+      try {
+        console.log('Sending message to backend:', message);
+        const response = await axios.post('/api/chatbot/chat', { message }, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        console.log('Received response from backend:', response.data);
+        if (response.data && response.data.response) {
+          addMessage('bot', response.data.response);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (error) {
+        console.error('Error communicating with chatbot API:', error);
+        addMessage('bot', t('chatbot.errorResponse'));
       }
     }
 
@@ -112,14 +117,12 @@ export default {
   transition: all 0.3s ease;
   z-index: 1000;
 }
-
 .chatbot-header {
   background-color: #007bff;
   color: white;
   padding: 10px;
   cursor: pointer;
 }
-
 .close-btn {
   float: right;
   background: none;
@@ -128,49 +131,41 @@ export default {
   font-size: 20px;
   cursor: pointer;
 }
-
 .chatbot-body {
   height: 300px;
   display: flex;
   flex-direction: column;
 }
-
 .messages {
   flex-grow: 1;
   overflow-y: auto;
   padding: 10px;
 }
-
 .user, .bot {
   margin-bottom: 10px;
   padding: 5px 10px;
   border-radius: 5px;
   max-width: 80%;
 }
-
 .user {
   background-color: #007bff;
   color: white;
   align-self: flex-end;
 }
-
 .bot {
   background-color: #f1f1f1;
   align-self: flex-start;
 }
-
 .input-area {
   display: flex;
   padding: 10px;
 }
-
 input {
   flex-grow: 1;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
 button {
   margin-left: 5px;
   padding: 5px 10px;

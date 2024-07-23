@@ -11,5 +11,12 @@
   "tryAgain": "Try Again",
   "lessons": "Lessons",
   "lessonDescription": "Description",
-  "startLesson": "Start Lesson"
+  "startLesson": "Start Lesson",
+  "chatbot": {
+    "title": "Chatbot",
+    "welcome": "Hello! How can I assist you today?",
+    "inputPlaceholder": "Type your message here...",
+    "send": "Send",
+    "errorResponse": "Sorry, I couldn't process your request. Please try again."
+  }
 }
