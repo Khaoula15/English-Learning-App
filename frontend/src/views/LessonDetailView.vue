@@ -46,7 +46,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
 export default {
@@ -55,6 +55,7 @@ export default {
     const lesson = ref(null)
     const flashcards = ref([])
     const route = useRoute()
+    const router = useRouter()
 
     const flipCard = (flashcard) => {
       flashcard.isFlipped = !flashcard.isFlipped
@@ -83,9 +84,13 @@ export default {
     onMounted(async () => {
       const lessonId = route.params.id
       try {
-        const lessonResponse = await axios.get(`/lessons/${lessonId}`)
+        const lessonResponse = await axios.get(`/lessons/${lessonId}`, {
+          headers: { 'x-auth-token': localStorage.getItem('token') }
+        })
         lesson.value = lessonResponse.data
-        const flashcardResponse = await axios.get(`/lessons/${lessonId}/flashcards`)
+        const flashcardResponse = await axios.get(`/lessons/${lessonId}/flashcards`, {
+          headers: { 'x-auth-token': localStorage.getItem('token') }
+        })
         flashcards.value = flashcardResponse.data.map(card => ({
           ...card,
           isFlipped: false,
@@ -94,7 +99,11 @@ export default {
           isCorrect: null
         }))
       } catch (error) {
-        console.error('Error fetching lesson data:', error)
+        if (error.response && error.response.status === 403) {
+          router.push('/payment')
+        } else {
+          console.error('Error fetching lesson data:', error)
+        }
       }
     })
 

@@ -95,39 +95,76 @@ Open your browser and navigate to `http://localhost:8080` to access the English 
 ## Project Structure
 
 ```
-english-learning-app/
+English-Learning-App/
+│
 ├── backend/
+│   ├── middleware/
+│   │   └── auth.js
+│   │
 │   ├── models/
-│   |      └── User.js
+│   │   └── User.js
+│   │
 │   ├── routes/
-|   |       ├── auth.js
-|   │       └── lessons.js
-│   ├── server.js
-│   └── .env
-└── frontend/
+│   │   ├── auth.js
+│   │   ├── lessons.js
+│   │   ├── payments.js
+│   │   └── users.js
+│   │
+│   ├── node_modules/
+│   ├── package.json
+│   ├── package-lock.json
+│   └── server.js
+│
+├── frontend/
+    ├── public/
+    │   ├── favicon.ico
+    │   └── index.html
+    │
     ├── src/
     │   ├── assets/
+    │   │   └── logo.png
+    │   │
     │   ├── components/
-    │   |       ├── Header.vue
-    │   │       └── Footer.vue
+    │   │   ├── ChatbotPopup.vue
+    │   │   ├── Footer.vue
+    │   │   └── Header.vue
+    │   │
+    │   ├── locales/
+    │   │   ├── ar.json
+    │   │   ├── ch.json
+    │   │   ├── en.json
+    │   │   ├── es.json
+    │   │   ├── fr.json
+    │   │   ├── ja.json
+    │   │   └── ko.json
+    │   │
     │   ├── router/
-    │   |      └── index.js
+    │   │   └── index.js
+    │   │
     │   ├── store/
-    │   |      └── index.js
+    │   │   └── index.js
+    │   │
     │   ├── views/
-    │   |      ├── HomeView.vue
-    │   |      ├── LessonDetailView.vue
-    │   |      ├── LessonsView.vue
-    │   |      ├── LoginView.vue
-    │   |      ├── RegisterView.vue
-    │   |      └── PortfolioView.vue
+    │   │   ├── HomeView.vue
+    │   │   ├── LessonDetailView.vue
+    │   │   ├── LessonsView.vue
+    │   │   ├── LoginView.vue
+    │   │   ├── PaymentView.vue
+    │   │   ├── PortfolioView.vue
+    │   │   ├── ProfileView.vue
+    │   │   └── RegisterView.vue
+    │   │
     │   ├── App.vue
     │   ├── i18n.js
-    │   ├── main.js
-    │   └── Header.vue
-    ├── public/
+    │   └── main.js
+    │
+    ├── babel.config.js
+    ├── jsconfig.json
     ├── package.json
-    └── README.md
+    ├── package-lock.json
+    ├── README.md
+    └── vue.config.js
+└── README.md
 ```
 
 ## Usage
@@ -204,4 +241,5 @@ This is the detailed process covers the implementation of a payment feature usin
   npm install @stripe/stripe-js
 ```
 2. Update Payment View file
+
 

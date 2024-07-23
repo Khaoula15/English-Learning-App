@@ -6,6 +6,8 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import PortfolioView from '@/views/PortfolioView.vue'
 import PaymentView from '@/views/PaymentView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import store from '@/store'
 
 const routes = [
   {
@@ -39,6 +41,12 @@ const routes = [
     component: PaymentView
   },
   {
+    path: '/profile',
+    name: 'ProfilePage',
+    component: ProfileView,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/portfolio',
     name: 'PortfolioPage',
     component: PortfolioView
@@ -46,8 +54,17 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters.isAuthenticated
+  if (isAuthenticated && to.name === 'Login') {
+    next({ name: 'Profile' })
+  } else {
+    next()
+  }
 })
 
 export default router

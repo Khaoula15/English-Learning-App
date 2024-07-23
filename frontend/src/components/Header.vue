@@ -9,6 +9,8 @@
         <li><router-link to="/lessons">Lessons</router-link></li>
         <li><router-link to="/register">Register</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
+        <li v-if="isAuthenticated"><router-link to="/profile">Profile</router-link></li>
+        <li v-if="isAuthenticated"><a href="#" @click="logout">Logout</a></li>
         <li><router-link to="/Payment">Payment</router-link></li>
         <li><router-link to="/Portfolio">Badr</router-link></li>
       </ul>
@@ -17,8 +19,26 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const isAuthenticated = computed(() => !!store.state.token)
+
+    const logout = () => {
+      store.commit('setToken', null)
+      localStorage.removeItem('token')
+      router.push('/login')
+    }
+
+    return { isAuthenticated, logout }
+  }
 }
 </script>
 
