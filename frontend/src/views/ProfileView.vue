@@ -2,42 +2,53 @@
   <div class="profile">
     <h1>{{ $t('profile') }}</h1>
     <div v-if="user">
-      <p>{{ $t('name') }}: {{ user.name }}</p>
-      <p>{{ $t('email') }}: {{ user.email }}</p>
-      <h2>{{ $t('progress') }}</h2>
+      <p><strong>{{ $t('name') }}:</strong> {{ user.name }}</p>
+      <p><strong>{{ $t('email') }}:</strong> {{ user.email }}</p>
+      <h2>{{ $t('freeLessons') }}</h2>
       <ul>
-        <li v-for="(progress, lessonId) in user.progress" :key="lessonId">
-          {{ $t('lessonTitle', { number: lessonId }) }}: 
-          {{ progress.completed ? $t('completed') : $t('inProgress') }}
-          ({{ $t('score') }}: {{ progress.score }})
+        <li v-for="lesson in freeLessons" :key="lesson.id">
+          <router-link :to="`/lessons/${lesson.id}`">{{ lesson.title }}</router-link>
         </li>
       </ul>
+      <h2>{{ $t('premiumLesson') }}</h2>
+      <div v-if="premiumLesson">
+        <p>{{ premiumLesson.title }}</p>
+        <button v-if="!hasPremiumAccess" @click="upgradeToPremium">{{ $t('upgradeToPremium') }}</button>
+        <router-link v-else :to="`/lessons/${premiumLesson.id}`">{{ $t('startPremiumLesson') }}</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'ProfileView',
-  setup() {
-    const user = ref(null)
+  setup () {
+    const store = useStore()
+    const { t } = useI18n()
 
-    onMounted(async () => {
-      try {
-        const response = await axios.get('/users/profile', {
-          headers: { 'x-auth-token': localStorage.getItem('token') }
-        })
-        user.value = response.data
-      } catch (error) {
-        console.error('Error fetching user profile:', error)
-      }
-    })
+    const user = computed(() => store.state.user)
+    const freeLessons = computed(() => store.getters.freeLessons)
+    const premiumLesson = computed(() => store.getters.premiumLesson)
+    const hasPremiumAccess = computed(() => store.getters.hasPremiumAccess)
 
-    return { user }
+    const upgradeToPremium = () => {
+      // Implement premium upgrade logic here
+      console.log('Upgrade to premium')
+    }
+
+    return {
+      user,
+      freeLessons,
+      premiumLesson,
+      hasPremiumAccess,
+      upgradeToPremium,
+      t
+    }
   }
 }
 </script>
-

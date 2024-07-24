@@ -1,13 +1,15 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 export default createStore({
   state: {
     token: localStorage.getItem('token') || null,
-    user: JSON.parse(localStorage.getItem('user')) || null
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    lessons: []
   },
   mutations: {
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
       if (token) {
         localStorage.setItem('token', token)
@@ -15,7 +17,7 @@ export default createStore({
         localStorage.removeItem('token')
       }
     },
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user
       if (user) {
         localStorage.setItem('user', JSON.stringify(user))
@@ -23,55 +25,56 @@ export default createStore({
         localStorage.removeItem('user')
       }
     },
-    updatePremiumAccess(state) {
-      if (state.user) {
-        state.user.hasPremiumAccess = true
-        localStorage.setItem('user', JSON.stringify(state.user))
-      }
+    setLessons (state, lessons) {
+      state.lessons = lessons
     }
   },
   actions: {
-    async login({ commit, dispatch }, credentials) {
+    async login ({ commit, dispatch }, credentials) {
       try {
         const response = await axios.post('/auth/login', credentials)
         const { token, user } = response.data
         commit('setToken', token)
         commit('setUser', user)
-        // After successful login, fetch additional user data if needed
-        await dispatch('fetchUserData')
+        axios.defaults.headers.common['x-auth-token'] = token
+        await dispatch('fetchLessons')
+        router.push('/profile')
         return user
       } catch (error) {
         console.error('Login failed:', error)
         throw error
       }
     },
-    async logout({ commit }) {
-      commit('setToken', null)
-      commit('setUser', null)
-    },
-    async updatePremiumAccess({ commit }) {
+    async register ({ commit }, credentials) {
       try {
-        await axios.post('/payments/update-premium-access')
-        commit('updatePremiumAccess')
+        await axios.post('/auth/register', credentials)
+        router.push('/login')
       } catch (error) {
-        console.error('Failed to update premium access:', error)
+        console.error('Registration failed:', error)
         throw error
       }
     },
-    async fetchUserData({ commit }) {
+    async fetchLessons ({ commit }) {
       try {
-        const response = await axios.get('/auth/user')
-        commit('setUser', response.data)
+        const response = await axios.get('/lessons')
+        commit('setLessons', response.data)
       } catch (error) {
-        console.error('Failed to fetch user data:', error)
-        commit('setUser', null)
-        commit('setToken', null)
+        console.error('Failed to fetch lessons:', error)
       }
+    },
+    logout ({ commit }) {
+      commit('setToken', null)
+      commit('setUser', null)
+      delete axios.defaults.headers.common['x-auth-token']
+      router.push('/login')
     }
   },
   getters: {
     isAuthenticated: state => !!state.token,
     currentUser: state => state.user,
-    hasPremiumAccess: state => state.user ? state.user.hasPremiumAccess : false
+    hasPremiumAccess: state => state.user ? state.user.hasPremiumAccess : false,
+    allLessons: state => state.lessons,
+    freeLessons: state => state.lessons.filter(lesson => !lesson.isPremium),
+    premiumLessons: state => state.lessons.filter(lesson => lesson.isPremium)
   }
 })

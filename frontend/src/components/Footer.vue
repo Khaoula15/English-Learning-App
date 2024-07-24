@@ -1,9 +1,8 @@
-<!-- src/components/Footer.vue -->
 <template>
   <footer class="English-Learning-App-footer">
     <div class="language-selector">
-      <label for="language-select">{{ $t('language') }}:</label>
-      <select id="language-select" v-model="$i18n.locale">
+      <label for="language-select">{{ t('language') }}:</label>
+      <select id="language-select" v-model="locale">
         <option value="en">English</option>
         <option value="fr">Français</option>
         <option value="es">Español</option>
@@ -13,13 +12,14 @@
         <option value="ja">日本語</option>
       </select>
     </div>
-    <p>{{ $t('footerText') }}</p>
+    <p>{{ t('footerText') }}</p>
     <ChatbotPopup />
   </footer>
 </template>
 
 <script>
 import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 import ChatbotPopup from './ChatbotPopup.vue'
 
 export default {
@@ -28,12 +28,18 @@ export default {
     ChatbotPopup
   },
   setup () {
-    const { t } = useI18n()
-    return { t }
+    const { t, locale } = useI18n()
+
+    return {
+      t,
+      locale: computed({
+        get: () => locale.value,
+        set: (value) => locale.value = value
+      })
+    }
   }
 }
 </script>
-
 
 <style scoped>
 .app-footer {

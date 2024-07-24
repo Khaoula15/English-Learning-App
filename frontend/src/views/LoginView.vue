@@ -14,25 +14,22 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 export default {
-  name: 'LoginPage',
+  name: 'LoginView',
   setup () {
+    const store = useStore()
+    const router = useRouter()
     const email = ref('')
     const password = ref('')
     const error = ref(null)
-    const store = useStore()
-    const router = useRouter()
 
     const login = async () => {
       try {
-        const response = await axios.post('/auth/login', {
+        await store.dispatch('login', {
           email: email.value,
           password: password.value
         })
-        store.commit('setToken', response.data.token)
-        router.push('/lessons')
       } catch (err) {
         error.value = err.response.data.message
       }

@@ -52,3 +52,4 @@ userSchema.methods.comparePassword = function(password, cb) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+

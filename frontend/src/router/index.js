@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
+import ContactView from '@/views/ContactView.vue'
 import LessonsView from '@/views/LessonsView.vue'
 import LessonDetailView from '@/views/LessonDetailView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -16,14 +18,26 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/lessons',
-    name: 'LessonsPage',
-    component: LessonsView
+    path: '/about',
+    name: 'AboutPage',
+    component: AboutView
   },
   {
-    path: '/lessons/:id', // Route for lesson details
-    name: 'LessonDetailPage',
-    component: LessonDetailView
+    path: '/contact',
+    name: 'ContactPage',
+    component: ContactView
+  },
+  {
+    path: '/lessons',
+    name: 'LessonsPage',
+    component: LessonsView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/lessonDetailView/:id',
+    name: 'LessonDetailView',
+    component: LessonDetailView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',
@@ -38,7 +52,8 @@ const routes = [
   {
     path: '/payment',
     name: 'PaymentPage',
-    component: PaymentView
+    component: PaymentView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',
@@ -50,7 +65,7 @@ const routes = [
     path: '/portfolio',
     name: 'PortfolioPage',
     component: PortfolioView
-   },
+  }
 ]
 
 const router = createRouter({
@@ -59,9 +74,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const isAuthenticated = store.getters.isAuthenticated
-  if (isAuthenticated && to.name === 'Login') {
-    next({ name: 'Profile' })
+
+  if (requiresAuth && !isAuthenticated) {
+    next('/login')
+  } else if (isAuthenticated && to.name === 'LoginPage') {
+    next('/profile')
   } else {
     next()
   }

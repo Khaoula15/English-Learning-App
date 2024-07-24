@@ -1,41 +1,48 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const { json, urlencoded } = require('body-parser');
 const cors = require('cors');
-const stripe = require('stripe')(process.env.STRIPE_API_KEY);
-const chatbotRoutes = require('./routes/chatbot');
-
+const { connect } = require('mongoose');
+const { default: mongoose } = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB', err));
+(() => {
+  return console.log('MongoDB connected') || connect(process.env.MONGO_URI, {useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+      .then;
+})
+.catch(err => console.log('MongoDB connection error:', err));
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'http://localhost:8080', // Adjust this to match the frontend URL
+  origin: 'http://localhost:8080',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
 
 // Routes
-const authRoutes = require('./routes/auth');
-const lessonRoutes = require('./routes/lessons');
-const paymentRoutes = require('./routes/payments');
-const userRoutes = require('./routes/users');
+import authRoutes from './routes/auth';
+import lessonRoutes from './routes/lessons';
+import paymentRoutes from './routes/payments';
+import userRoutes from './routes/users';
 
-app.use('/api/auth', authRoutes);
-app.use('/api/lessons', lessonRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/chatbot', chatbotRoutes);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/lessons', require('./routes/lessons'));
+app.use('/api/payments', require('./routes/payments'));
+app.use('/api/users', require('./routes/users'));
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
+});
+
+// Start the server
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

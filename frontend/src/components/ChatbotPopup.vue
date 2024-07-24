@@ -26,7 +26,7 @@ import axios from 'axios'
 
 export default {
   name: 'ChatbotPopup',
-  setup() {
+  setup () {
     const { t, locale } = useI18n()
     const isOpen = ref(false)
     const messages = ref([])
@@ -58,21 +58,21 @@ export default {
 
     const processUserMessage = async (message) => {
       try {
-        console.log('Sending message to backend:', message);
+        console.log('Sending message to backend:', message)
         const response = await axios.post('/api/chatbot/chat', { message }, {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           }
-        });
-        console.log('Received response from backend:', response.data);
+        })
+        console.log('Received response from backend:', response.data)
         if (response.data && response.data.response) {
-          addMessage('bot', response.data.response);
+          addMessage('bot', response.data.response)
         } else {
-          throw new Error('Invalid response format');
+          throw new Error('Invalid response format')
         }
       } catch (error) {
-        console.error('Error communicating with chatbot API:', error);
-        addMessage('bot', t('chatbot.errorResponse'));
+        console.error('Error communicating with chatbot API:', error)
+        addMessage('bot', t('chatbot.errorResponse'))
       }
     }
 

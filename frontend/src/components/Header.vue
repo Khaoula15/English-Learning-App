@@ -25,7 +25,7 @@ import { useRouter } from 'vue-router'
 
 export default {
   name: 'Header',
-  setup() {
+  setup () {
     const store = useStore()
     const router = useRouter()
 

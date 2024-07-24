@@ -10,13 +10,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faPlay, faCreditCard, faCalendarAlt, faLock)
 
+// Set base URL for axios
 axios.defaults.baseURL = 'http://localhost:3000/api'
 
 // Add axios interceptor for authentication
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers['x-auth-token'] = token
   }
   return config
 })

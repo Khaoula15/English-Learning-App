@@ -36,7 +36,7 @@ import { useRouter } from 'vue-router'
 
 export default {
   name: 'PaymentView',
-  setup() {
+  setup () {
     const store = useStore()
     const router = useRouter()
     const cardNumber = ref('')

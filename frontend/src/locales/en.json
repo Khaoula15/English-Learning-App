@@ -17,6 +17,12 @@
     "welcome": "Hello! How can I assist you today?",
     "inputPlaceholder": "Type your message here...",
     "send": "Send",
-    "errorResponse": "Sorry, I couldn't process your request. Please try again."
+    "errorResponse": "Sorry, I couldn't process your request. Please try again.",
+    "profile": "Profile",
+  "name": "Name",
+  "email": "Email",
+  "freeLessons": "Free Lessons",
+  "premiumLesson": "Premium Lesson",
+  "loadingLesson": "Loading Lesson"
   }
 }

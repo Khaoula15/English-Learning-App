@@ -10,12 +10,12 @@
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'HomePage', // Corresponds to the router name
+  name: 'HomePage',
   setup () {
     const router = useRouter()
 
     const startLearning = () => {
-      router.push('/lessons')
+      router.push('/lessonDetailView')
     }
 
     return { startLearning }
