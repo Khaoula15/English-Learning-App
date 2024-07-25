@@ -28,9 +28,10 @@
     }
   ],
   "env": {
-    "MONGO_URI": "@mongo_uri",
-    "JWT_SECRET_KEY": "@jwt_secret_key",
     "OPENAI_API_KEY": "@openai_api_key",
-    "STRIPE_API_KEY": "@stripe_api_key"
+    "MONGO_URI": "@mongo_uri",
+    "PORT": "@port",
+    "STRIPE_API_KEY": "@stripe_api_key",
+    "JWT_SECRET_KEY": "@jwt_secret_key"
   }
 }
