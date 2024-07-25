@@ -1,9 +1,12 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "frontend/dist" }
+      "config": { 
+        "distDir": "dist"
+      }
     },
     {
       "src": "backend/server.js",
@@ -11,8 +14,23 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "backend/server.js" },
-    { "src": "/(.*)", "dest": "frontend/dist/index.html" }
-  ]
+    { 
+      "src": "/api/(.*)", 
+      "dest": "backend/server.js" 
+    },
+    { 
+      "src": "/(.*\\.(js|css|png|jpg|gif|svg|ico)$)",
+      "dest": "frontend/dist/$1"
+    },
+    { 
+      "src": "/(.*)", 
+      "dest": "frontend/dist/index.html" 
+    }
+  ],
+  "env": {
+    "MONGO_URI": "@mongo_uri",
+    "JWT_SECRET_KEY": "@jwt_secret_key",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "STRIPE_API_KEY": "@stripe_api_key"
+  }
 }
-

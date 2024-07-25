@@ -25,14 +25,16 @@ export default {
 
     const register = async () => {
       try {
-        await axios.post('/auth/register', {
+        const response = await axios.post('http://localhost:3000/api/auth/register', {
           name: name.value,
           email: email.value,
           password: password.value
-        })
-        this.$router.push('/login')
+        });
+        console.log('Registration successful:', response.data);
+        window.location.href = '/login';
       } catch (err) {
-        error.value = err.response.data.message
+        console.error('Registration error:', err.response?.data || err.message);
+        error.value = err.response?.data?.message || 'An error occurred during registration';
       }
     }
 

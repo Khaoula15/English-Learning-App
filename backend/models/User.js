@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+// Hash the password before saving
 userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next();
 
@@ -31,6 +32,7 @@ userSchema.pre('save', function(next) {
   });
 });
 
+// Compare the provided password with the stored hash
 userSchema.methods.comparePassword = function(password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return cb(err);
@@ -39,3 +41,4 @@ userSchema.methods.comparePassword = function(password, cb) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+
