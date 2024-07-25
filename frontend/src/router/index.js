@@ -12,6 +12,11 @@ import store from '@/store'
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: HomeView
+  },
+  {
     path: '/',
     name: 'HomePage',
     component: HomeView
@@ -58,7 +63,7 @@ const routes = [
     path: '/portfolio',
     name: 'PortfolioPage',
     component: PortfolioView
-  },
+  }
 ]
 
 const router = createRouter({

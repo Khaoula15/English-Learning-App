@@ -29,12 +29,12 @@ export default {
           name: name.value,
           email: email.value,
           password: password.value
-        });
-        console.log('Registration successful:', response.data);
-        window.location.href = '/login';
+        })
+        console.log('Registration successful:', response.data)
+        window.location.href = '/login'
       } catch (err) {
-        console.error('Registration error:', err.response?.data || err.message);
-        error.value = err.response?.data?.message || 'An error occurred during registration';
+        console.error('Registration error:', err.response?.data || err.message)
+        error.value = err.response?.data?.message || 'An error occurred during registration'
       }
     }
 

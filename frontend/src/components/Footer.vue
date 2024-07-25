@@ -34,7 +34,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .app-footer {
   margin-top: 2rem;

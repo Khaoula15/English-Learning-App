@@ -7,23 +7,23 @@ export default createStore({
     user: null
   },
   mutations: {
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
     },
-    setUser(state, user) {
+    setUser (state, user) {
       state.user = user
     },
-    logout(state) {
+    logout (state) {
       state.token = null
       state.user = null
     }
   },
   actions: {
-    login({ commit }, { token, user }) {
+    login ({ commit }, { token, user }) {
       commit('setToken', token)
       commit('setUser', user)
     },
-    logout({ commit }) {
+    logout ({ commit }) {
       commit('logout')
     }
   },

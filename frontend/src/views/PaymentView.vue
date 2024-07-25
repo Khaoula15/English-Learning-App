@@ -38,39 +38,39 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
-  name: "PaymentView",
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const cardNumber = ref("");
-    const expiryDate = ref("");
-    const cvv = ref("");
+  name: 'PaymentView',
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const cardNumber = ref('')
+    const expiryDate = ref('')
+    const cvv = ref('')
 
     const processPayment = async () => {
       try {
         // Here you would typically integrate with a payment gateway
         // For this example, we'll just simulate a successful payment
-        await store.dispatch("updatePremiumAccess");
-        alert("Payment successful! You now have premium access.");
-        router.push("/profile");
+        await store.dispatch('updatePremiumAccess')
+        alert('Payment successful! You now have premium access.')
+        router.push('/profile')
       } catch (error) {
-        alert("Payment failed. Please try again.");
+        alert('Payment failed. Please try again.')
       }
-    };
+    }
 
     return {
       cardNumber,
       expiryDate,
       cvv,
-      processPayment,
-    };
-  },
-};
+      processPayment
+    }
+  }
+}
 </script>
 
 <style scoped>

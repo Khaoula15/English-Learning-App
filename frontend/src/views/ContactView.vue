@@ -22,33 +22,33 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import axios from "axios";
+import { ref } from 'vue'
+import axios from 'axios'
 
 export default {
-  name: "ContactView",
-  setup() {
-    const name = ref("");
-    const email = ref("");
-    const message = ref("");
-    const successMessage = ref("");
-    const errorMessage = ref("");
+  name: 'ContactView',
+  setup () {
+    const name = ref('')
+    const email = ref('')
+    const message = ref('')
+    const successMessage = ref('')
+    const errorMessage = ref('')
 
     const submitForm = async () => {
       try {
-        await axios.post("/api/contact", {
+        await axios.post('/api/contact', {
           name: name.value,
           email: email.value,
-          message: message.value,
-        });
-        successMessage.value = "Your message has been sent successfully!";
-        name.value = "";
-        email.value = "";
-        message.value = "";
+          message: message.value
+        })
+        successMessage.value = 'Your message has been sent successfully!'
+        name.value = ''
+        email.value = ''
+        message.value = ''
       } catch (error) {
-        errorMessage.value = "An error occurred. Please try again later.";
+        errorMessage.value = 'An error occurred. Please try again later.'
       }
-    };
+    }
 
     return {
       name,
@@ -56,10 +56,10 @@ export default {
       message,
       successMessage,
       errorMessage,
-      submitForm,
-    };
-  },
-};
+      submitForm
+    }
+  }
+}
 </script>
 
 <style scoped>
