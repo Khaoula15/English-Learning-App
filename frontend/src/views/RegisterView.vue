@@ -13,14 +13,11 @@
 
 <script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 export default {
   name: 'RegisterView',
   setup () {
-    const store = useStore()
-    const router = useRouter()
     const name = ref('')
     const email = ref('')
     const password = ref('')
@@ -28,12 +25,12 @@ export default {
 
     const register = async () => {
       try {
-        await store.dispatch('register', {
+        await axios.post('/auth/register', {
           name: name.value,
           email: email.value,
           password: password.value
         })
-        router.push('/login')
+        this.$router.push('/login')
       } catch (err) {
         error.value = err.response.data.message
       }

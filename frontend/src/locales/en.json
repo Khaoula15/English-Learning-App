@@ -11,18 +11,5 @@
   "tryAgain": "Try Again",
   "lessons": "Lessons",
   "lessonDescription": "Description",
-  "startLesson": "Start Lesson",
-  "chatbot": {
-    "title": "Chatbot",
-    "welcome": "Hello! How can I assist you today?",
-    "inputPlaceholder": "Type your message here...",
-    "send": "Send",
-    "errorResponse": "Sorry, I couldn't process your request. Please try again.",
-    "profile": "Profile",
-  "name": "Name",
-  "email": "Email",
-  "freeLessons": "Free Lessons",
-  "premiumLesson": "Premium Lesson",
-  "loadingLesson": "Loading Lesson"
-  }
+  "startLesson": "Start Lesson"
 }

@@ -70,25 +70,25 @@
 
 <script>
 export default {
-  name: 'PortfolioView',
-  data () {
+  name: "PortfolioView",
+  data() {
     return {
       skills: [
-        'JavaScript',
-        'Vue.js',
-        'Node.js',
-        'Python',
-        'Flask',
-        'MongoDB',
-        'HTML5',
-        'CSS3',
-        'RESTful APIs',
-        'Git'
+        "JavaScript",
+        "Vue.js",
+        "Node.js",
+        "Python",
+        "Flask",
+        "MongoDB",
+        "HTML5",
+        "CSS3",
+        "RESTful APIs",
+        "Git",
       ],
-      projectTech: ['Vue.js', 'Flask', 'MongoDB', 'Tailwind CSS']
-    }
-  }
-}
+      projectTech: ["Vue.js", "Flask", "MongoDB", "Tailwind CSS"],
+    };
+  },
+};
 </script>
 
 <style scoped>

@@ -1,14 +1,14 @@
 <template>
   <div class="about">
-    <h1>{{ $t('about.title') }}</h1>
+    <h1>{{ $t("about.title") }}</h1>
     <div class="content">
-      <p>{{ $t('about.description') }}</p>
-      <h2>{{ $t('about.features.title') }}</h2>
+      <p>{{ $t("about.description") }}</p>
+      <h2>{{ $t("about.features.title") }}</h2>
       <ul>
-        <li>{{ $t('about.features.interactive') }}</li>
-        <li>{{ $t('about.features.progress') }}</li>
-        <li>{{ $t('about.features.premium') }}</li>
-        <li>{{ $t('about.features.multilingual') }}</li>
+        <li>{{ $t("about.features.interactive") }}</li>
+        <li>{{ $t("about.features.progress") }}</li>
+        <li>{{ $t("about.features.premium") }}</li>
+        <li>{{ $t("about.features.multilingual") }}</li>
       </ul>
     </div>
   </div>
@@ -16,8 +16,8 @@
 
 <script>
 export default {
-  name: 'AboutView'
-}
+  name: "AboutView",
+};
 </script>
 
 <style scoped>
@@ -52,7 +52,7 @@ li {
 }
 
 li::before {
-  content: '✓';
+  content: "✓";
   color: #2ecc71;
   position: absolute;
   left: 0;

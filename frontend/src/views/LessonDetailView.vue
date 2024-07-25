@@ -1,49 +1,60 @@
 <template>
   <div class="lesson-detail" v-if="lesson">
-    <h1>{{ t('lessonTitle', { number: lesson.id }) }}</h1>
+    <h1>{{ $t('lessonTitle', { number: lesson.id }) }}</h1>
     <p>{{ lesson.description }}</p>
-    <h2>{{ t('flashcards') }}</h2>
+    <h2>{{ $t('flashcards') }}</h2>
     <div class="flashcards-container">
-      <div v-for="flashcard in flashcards" :key="flashcard.id" class="flashcard">
-        <div :class="['card', { 'flipped': flashcard.isFlipped }]" @click="flipCard(flashcard)">
-          <div class="front">
+      <div
+        v-for="flashcard in flashcards"
+        :key="flashcard.id"
+        class="flashcard"
+        :class="{ flipped: flashcard.isFlipped }"
+      >
+        <div class="flashcard-inner">
+          <div class="flashcard-front" @click="flipCard(flashcard)">
             <h3>{{ flashcard.word }}</h3>
-          </div>
-          <div class="back">
             <p>{{ flashcard.definition }}</p>
           </div>
+          <div class="flashcard-back">
+            <div class="flashcard-content" @click="flipCard(flashcard)">
+              <h3>{{ flashcard.question }}</h3>
+            </div>
+            <div class="input-area" @click.stop>
+              <input
+                v-model="flashcard.userDefinition"
+                @keyup.enter="checkDefinition(flashcard)"
+                :placeholder="$t('typeAnswer')"
+                :disabled="flashcard.isChecked"
+              >
+              <button @click.stop="checkDefinition(flashcard)" :disabled="flashcard.isChecked" class="submit-btn">
+                {{ $t('submit') }}
+              </button>
+              <p v-if="flashcard.isChecked" :class="{ 'correct': flashcard.isCorrect, 'incorrect': !flashcard.isCorrect }">
+                {{ flashcard.isCorrect ? $t('correct') : $t('incorrect') }}
+              </p>
+              <button v-if="flashcard.isChecked" @click.stop="resetFlashcard(flashcard)" class="reset-btn">
+                {{ $t('tryAgain') }}
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="input-container">
-          <input v-model="flashcard.userDefinition" :placeholder="t('typeAnswer')" />
-          <button @click="checkDefinition(flashcard)" :disabled="flashcard.isChecked">
-            {{ t('submit') }}
-          </button>
-          <button @click="resetFlashcard(flashcard)">{{ t('tryAgain') }}</button>
-        </div>
-        <p v-if="flashcard.isChecked" :class="{ 'correct': flashcard.isCorrect, 'incorrect': !flashcard.isCorrect }">
-          {{ flashcard.isCorrect ? t('correct') : t('incorrect') }}
-        </p>
       </div>
     </div>
-    <router-link to="/lessons" class="back-link">{{ t('backToLessons') }}</router-link>
+    <router-link to="/lessons" class="back-link">{{ $t('backToLessons') }}</router-link>
   </div>
-  <div v-else>{{ t('loadingLesson') }}</div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 export default {
   name: 'LessonDetailView',
   setup () {
-    const { t } = useI18n()
     const lesson = ref(null)
     const flashcards = ref([])
     const route = useRoute()
-    const router = useRouter()
 
     const flipCard = (flashcard) => {
       flashcard.isFlipped = !flashcard.isFlipped
@@ -51,6 +62,7 @@ export default {
 
     const checkDefinition = async (flashcard) => {
       if (!flashcard.userDefinition) return
+
       try {
         const response = await axios.post(`/lessons/${route.params.id}/flashcards/${flashcard.id}/check`, {
           userDefinition: flashcard.userDefinition
@@ -82,18 +94,15 @@ export default {
           isCorrect: null
         }))
       } catch (error) {
-        if (error.response && error.response.status === 403) {
-          router.push('/payment')
-        } else {
-          console.error('Error fetching lesson data:', error)
-        }
+        console.error('Error fetching lesson data:', error)
       }
     })
 
-    return { t, lesson, flashcards, flipCard, checkDefinition, resetFlashcard }
+    return { lesson, flashcards, flipCard, checkDefinition, resetFlashcard }
   }
 }
 </script>
+
 
 <style scoped>
 .lesson-detail {

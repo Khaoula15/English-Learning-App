@@ -1,20 +1,20 @@
 <template>
   <div class="contact">
-    <h1>{{ $t('contact.title') }}</h1>
+    <h1>{{ $t("contact.title") }}</h1>
     <form @submit.prevent="submitForm">
       <div class="form-group">
-        <label for="name">{{ $t('contact.name') }}</label>
-        <input type="text" id="name" v-model="name" required>
+        <label for="name">{{ $t("contact.name") }}</label>
+        <input type="text" id="name" v-model="name" required />
       </div>
       <div class="form-group">
-        <label for="email">{{ $t('contact.email') }}</label>
-        <input type="email" id="email" v-model="email" required>
+        <label for="email">{{ $t("contact.email") }}</label>
+        <input type="email" id="email" v-model="email" required />
       </div>
       <div class="form-group">
-        <label for="message">{{ $t('contact.message') }}</label>
+        <label for="message">{{ $t("contact.message") }}</label>
         <textarea id="message" v-model="message" required></textarea>
       </div>
-      <button type="submit">{{ $t('contact.submit') }}</button>
+      <button type="submit">{{ $t("contact.submit") }}</button>
     </form>
     <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -22,33 +22,33 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref } from "vue";
+import axios from "axios";
 
 export default {
-  name: 'ContactView',
-  setup () {
-    const name = ref('')
-    const email = ref('')
-    const message = ref('')
-    const successMessage = ref('')
-    const errorMessage = ref('')
+  name: "ContactView",
+  setup() {
+    const name = ref("");
+    const email = ref("");
+    const message = ref("");
+    const successMessage = ref("");
+    const errorMessage = ref("");
 
     const submitForm = async () => {
       try {
-        await axios.post('/api/contact', {
+        await axios.post("/api/contact", {
           name: name.value,
           email: email.value,
-          message: message.value
-        })
-        successMessage.value = 'Your message has been sent successfully!'
-        name.value = ''
-        email.value = ''
-        message.value = ''
+          message: message.value,
+        });
+        successMessage.value = "Your message has been sent successfully!";
+        name.value = "";
+        email.value = "";
+        message.value = "";
       } catch (error) {
-        errorMessage.value = 'An error occurred. Please try again later.'
+        errorMessage.value = "An error occurred. Please try again later.";
       }
-    }
+    };
 
     return {
       name,
@@ -56,10 +56,10 @@ export default {
       message,
       successMessage,
       errorMessage,
-      submitForm
-    }
-  }
-}
+      submitForm,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -78,7 +78,8 @@ label {
   margin-bottom: 0.5rem;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -90,7 +91,7 @@ textarea {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 0.5rem 1rem;
   border: none;

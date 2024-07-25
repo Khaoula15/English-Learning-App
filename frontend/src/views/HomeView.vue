@@ -10,12 +10,12 @@
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'HomePage',
+  name: 'HomePage', // Corresponds to the router name
   setup () {
     const router = useRouter()
 
     const startLearning = () => {
-      router.push('/lessonDetailView')
+      router.push('/lessons')
     }
 
     return { startLearning }
@@ -23,6 +23,3 @@ export default {
 }
 </script>
 
-<style scoped>
-/* Add your home page styles here */
-</style>

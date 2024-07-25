@@ -18,21 +18,9 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  },
-  hasPremiumAccess: {
-    type: Boolean,
-    default: false
-  },
-  progress: {
-    type: Map,
-    of: {
-      completed: Boolean,
-      score: Number
-    }
   }
 });
 
-// Hash password before saving
 userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next();
 
@@ -43,7 +31,6 @@ userSchema.pre('save', function(next) {
   });
 });
 
-// Compare password method
 userSchema.methods.comparePassword = function(password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return cb(err);
@@ -52,4 +39,3 @@ userSchema.methods.comparePassword = function(password, cb) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-
