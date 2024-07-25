@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -22,16 +23,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configure CORS
-app.use(cors({
-  origin: 'http://localhost:8080', // Replace with your frontend URL
-  credentials: true,
-}));
+app.use(cors());
 
 // Routes
 const authRoutes = require('./routes/auth');
 const lessonRoutes = require('./routes/lessons');
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {

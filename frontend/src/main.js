@@ -5,7 +5,7 @@ import store from './store'
 import axios from 'axios'
 import i18n from './i18n'
 
-axios.defaults.baseURL = 'http://localhost:3000/api'
+axios.defaults.baseURL = process.env.VUE_APP_API_URL || '/api'
 
 const app = createApp(App)
 app.use(router)
