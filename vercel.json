@@ -26,10 +26,5 @@
       "src": "/(.*)", 
       "dest": "frontend/dist/index.html" 
     }
-  ],
-  "env": {
-    "MONGO_URI": "@mongo_uri",
-    "JWT_SECRET_KEY": "@jwt_secret_key",
-    "STRIPE_API_KEY": "@stripe_api_key"
-  }
+  ]
 }
