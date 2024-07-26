@@ -1,15 +1,17 @@
 {
-  "language": "Language",
-  "footerText": "© 2024 Your App Name. All rights reserved.",
+  "login": "Login",
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "name": "Name",
+  "lessons": "Lessons",
+  "noLessons": "No lessons available",
   "lessonTitle": "Lesson {number}",
-  "backToLessons": "Back to Lessons",
   "flashcards": "Flashcards",
-  "typeAnswer": "Type your answer here",
+  "typeAnswer": "Type your answer",
   "submit": "Submit",
   "correct": "Correct!",
-  "incorrect": "Incorrect. Try again.",
+  "incorrect": "Incorrect",
   "tryAgain": "Try Again",
-  "lessons": "Lessons",
-  "lessonDescription": "Description",
-  "startLesson": "Start Lesson"
+  "backToLessons": "Back to Lessons"
 }

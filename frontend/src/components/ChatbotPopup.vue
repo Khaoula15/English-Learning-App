@@ -27,93 +27,74 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'ChatbotPopup',
   setup() {
-    const { t, locale } = useI18n()
-    const isOpen = ref(false)
-    const messages = ref([])
-    const userInput = ref('')
-    const messagesContainer = ref(null)
+    const { t, locale } = useI18n();
+    const isOpen = ref(false);
+    const messages = ref([]);
+    const userInput = ref('');
+    const messagesContainer = ref(null);
 
     const toggleChat = () => {
-      isOpen.value = !isOpen.value
+      isOpen.value = !isOpen.value;
       if (isOpen.value && messages.value.length === 0) {
-        addMessage('bot', t('chatbot.welcome'))
+        addMessage('bot', t('chatbot.welcome'));
       }
-    }
+    };
 
     const closeChat = () => {
-      isOpen.value = false
-    }
+      isOpen.value = false;
+    };
 
     const addMessage = (type, text) => {
-      messages.value.push({ type, text })
-      scrollToBottom()
-    }
+      messages.value.push({ type, text });
+      scrollToBottom();
+    };
 
     const sendMessage = () => {
-      if (userInput.value.trim() === '') return
-      addMessage('user', userInput.value)
-      processUserMessage(userInput.value)
-      userInput.value = ''
-    }
+      if (userInput.value.trim() === '') return;
+      addMessage('user', userInput.value);
+      processUserMessage(userInput.value);
+      userInput.value = '';
+    };
 
     const processUserMessage = (message) => {
-      const lowercaseMessage = message.toLowerCase()
-      if (
-        lowercaseMessage.includes('hello') ||
-        lowercaseMessage.includes('hi')
-      ) {
-        addMessage('bot', t('chatbot.greeting'))
-      } else if (
-        lowercaseMessage.includes('lesson') ||
-        lowercaseMessage.includes('lessons')
-      ) {
-        addMessage('bot', t('chatbot.lessonInfo'))
-      } else if (
-        lowercaseMessage.includes('register') ||
-        lowercaseMessage.includes('sign up')
-      ) {
-        addMessage('bot', t('chatbot.registerInfo'))
-      } else if (
-        lowercaseMessage.includes('login') ||
-        lowercaseMessage.includes('sign in')
-      ) {
-        addMessage('bot', t('chatbot.loginInfo'))
-      } else if (
-        lowercaseMessage.includes('help') ||
-        lowercaseMessage.includes('support')
-      ) {
-        addMessage('bot', t('chatbot.helpInfo'))
-      } else if (
-        lowercaseMessage.includes('about') ||
-        lowercaseMessage.includes('info')
-      ) {
-        addMessage('bot', t('chatbot.aboutInfo'))
+      const lowercaseMessage = message.toLowerCase();
+      if (lowercaseMessage.includes('hello') || lowercaseMessage.includes('hi')) {
+        addMessage('bot', t('chatbot.greeting'));
+      } else if (lowercaseMessage.includes('lesson') || lowercaseMessage.includes('lessons')) {
+        addMessage('bot', t('chatbot.lessonInfo'));
+      } else if (lowercaseMessage.includes('register') || lowercaseMessage.includes('sign up')) {
+        addMessage('bot', t('chatbot.registerInfo'));
+      } else if (lowercaseMessage.includes('login') || lowercaseMessage.includes('sign in')) {
+        addMessage('bot', t('chatbot.loginInfo'));
+      } else if (lowercaseMessage.includes('help') || lowercaseMessage.includes('support')) {
+        addMessage('bot', t('chatbot.helpInfo'));
+      } else if (lowercaseMessage.includes('about') || lowercaseMessage.includes('info')) {
+        addMessage('bot', t('chatbot.aboutInfo'));
       } else {
-        addMessage('bot', t('chatbot.defaultResponse'))
+        addMessage('bot', t('chatbot.defaultResponse'));
       }
-    }
+    };
 
     const scrollToBottom = () => {
       setTimeout(() => {
         if (messagesContainer.value) {
-          messagesContainer.value.scrollTop =
-            messagesContainer.value.scrollHeight
+          messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
         }
-      }, 0)
-    }
+      }, 0);
+    };
 
     watch(locale, () => {
-      messages.value = []
+      messages.value = [];
       if (isOpen.value) {
-        addMessage('bot', t('chatbot.welcome'))
+        addMessage('bot', t('chatbot.welcome'));
       }
-    })
+    });
 
     return {
       isOpen,
@@ -123,7 +104,7 @@ export default {
       toggleChat,
       closeChat,
       sendMessage
-    }
+    };
   }
 }
 </script>

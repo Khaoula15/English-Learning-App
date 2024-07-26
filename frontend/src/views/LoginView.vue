@@ -32,7 +32,8 @@ export default {
           password: password.value
         })
         store.commit('setToken', response.data.token)
-        router.push('/lessons')
+        store.commit('setUser', response.data.user)
+        router.push('/profile')  // Changed from '/lessons' to '/profile'
       } catch (err) {
         error.value = err.response.data.message
       }

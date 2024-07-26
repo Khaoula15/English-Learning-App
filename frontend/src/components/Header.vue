@@ -6,20 +6,41 @@
       </div>
       <ul>
         <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/lessons">Lessons</router-link></li>
         <li><router-link to="/about">About</router-link></li>
         <li><router-link to="/contact">Contact</router-link></li>
-        <li><router-link to="/lessons">Lessons</router-link></li>
-        <li><router-link to="/register">Register</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
-        <li><router-link to="/Portfolio">Badr</router-link></li>
+        <li v-if="!isAuthenticated"><router-link to="/register">Register</router-link></li>
+        <li v-if="!isAuthenticated"><router-link to="/login">Login</router-link></li>
+        <li v-if="isAuthenticated"><router-link to="/profile">Profile</router-link></li>
+        <li v-if="isAuthenticated"><a href="#" @click="logout">Logout</a></li>
+        <li v-if="!hasPremiumAccess"><router-link to="/payment">Upgrade to Premium</router-link></li>
+        <li><router-link to="/portfolio">Portfolio</router-link></li>
       </ul>
     </nav>
   </header>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const isAuthenticated = computed(() => store.getters.isAuthenticated)
+    const hasPremiumAccess = computed(() => store.getters.hasPremiumAccess)
+
+    const logout = () => {
+      store.dispatch('logout')
+      router.push('/login')
+    }
+
+    return { isAuthenticated, hasPremiumAccess, logout }
+  }
 }
 </script>
 

@@ -1,16 +1,30 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import axios from 'axios'
-import i18n from './i18n'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import axios from 'axios';
+import i18n from './i18n';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlay, faCreditCard, faCalendarAlt, faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-// Set the base URL for Axios using the environment variable
-axios.defaults.baseURL = process.env.VUE_APP_API_URL || 'http://localhost:5000/api'
+library.add(faPlay, faCreditCard, faCalendarAlt, faLock);
 
-const app = createApp(App)
-app.use(router)
-app.use(store)
-app.use(i18n)
-app.mount('#app')
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
+// Add axios interceptor for authentication
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+const app = createApp(App);
+app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(router);
+app.use(store);
+app.use(i18n);
+app.mount('#app');
 

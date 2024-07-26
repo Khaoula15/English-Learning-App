@@ -6,19 +6,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useRouter } from 'vue-router'
 
-export default {
-  name: 'HomePage', // Corresponds to the router name
-  setup () {
-    const router = useRouter()
+const router = useRouter()
 
-    const startLearning = () => {
-      router.push('/lessons')
-    }
-
-    return { startLearning }
-  }
+const startLearning = () => {
+  router.push('/lessons')
 }
 </script>

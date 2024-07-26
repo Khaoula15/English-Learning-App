@@ -6,6 +6,7 @@
         <h2>{{ $t('lessonTitle', { number: lesson.id }) }}</h2>
         <p>{{ $t('lessonDescription') }}: {{ lesson.description }}</p>
         <router-link :to="'/lessons/' + lesson.id">{{ $t('startLesson') }}</router-link>
+        <span v-if="lesson.isPremium" class="premium-badge">Premium</span>
       </li>
     </ul>
   </div>
@@ -24,7 +25,9 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get('/lessons')
+        const response = await axios.get('/lessons', {
+          headers: { 'x-auth-token': localStorage.getItem('token') }
+        })
         lessons.value = response.data
       } catch (error) {
         console.error('Error fetching lessons:', error)
@@ -47,5 +50,14 @@ export default {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+
+.premium-badge {
+  background-color: gold;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 10px;
+  font-size: 0.8em;
 }
 </style>

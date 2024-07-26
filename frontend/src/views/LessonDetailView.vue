@@ -25,7 +25,7 @@
                 @keyup.enter="checkDefinition(flashcard)"
                 :placeholder="$t('typeAnswer')"
                 :disabled="flashcard.isChecked"
-              >
+              />
               <button @click.stop="checkDefinition(flashcard)" :disabled="flashcard.isChecked" class="submit-btn">
                 {{ $t('submit') }}
               </button>
@@ -45,16 +45,63 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import axios from 'axios'
 
 export default {
   name: 'LessonDetailView',
-  setup () {
+  setup() {
     const lesson = ref(null)
     const flashcards = ref([])
     const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
+
+    const progress = computed(() => {
+      const total = flashcards.value.length
+      const completed = flashcards.value.filter(f => f.isCorrect).length
+      return Math.round((completed / total) * 100)
+    })
+
+    const fetchLessonData = async () => {
+      const lessonId = route.params.id
+      try {
+        const [lessonResponse, flashcardResponse] = await Promise.all([
+          axios.get(`/lessons/${lessonId}`, {
+            headers: { 'x-auth-token': localStorage.getItem('token') }
+          }),
+          axios.get(`/lessons/${lessonId}/flashcards`, {
+            headers: { 'x-auth-token': localStorage.getItem('token') }
+          })
+        ])
+        lesson.value = lessonResponse.data
+        flashcards.value = flashcardResponse.data.map(card => ({
+          ...card,
+          isFlipped: false,
+          userDefinition: '',
+          isChecked: false,
+          isCorrect: null
+        }))
+      } catch (error) {
+        handleError(error)
+      }
+    }
+
+    const updateProgress = async () => {
+      try {
+        await axios.post(`/lessons/${route.params.id}/progress`, {
+          completed: progress.value === 100,
+          score: progress.value
+        }, {
+          headers: { 'x-auth-token': localStorage.getItem('token') }
+        })
+        store.dispatch('fetchUserData')  // Update user data in Vuex store
+      } catch (error) {
+        console.error('Error updating progress:', error)
+      }
+    }
 
     const flipCard = (flashcard) => {
       flashcard.isFlipped = !flashcard.isFlipped
@@ -69,6 +116,7 @@ export default {
         })
         flashcard.isCorrect = response.data.isCorrect
         flashcard.isChecked = true
+        updateProgress()
       } catch (error) {
         console.error('Error checking definition:', error)
       }
@@ -80,25 +128,17 @@ export default {
       flashcard.isCorrect = null
     }
 
-    onMounted(async () => {
-      const lessonId = route.params.id
-      try {
-        const lessonResponse = await axios.get(`/lessons/${lessonId}`)
-        lesson.value = lessonResponse.data
-        const flashcardResponse = await axios.get(`/lessons/${lessonId}/flashcards`)
-        flashcards.value = flashcardResponse.data.map(card => ({
-          ...card,
-          isFlipped: false,
-          userDefinition: '',
-          isChecked: false,
-          isCorrect: null
-        }))
-      } catch (error) {
+    const handleError = (error) => {
+      if (error.response && error.response.status === 403) {
+        router.push('/payment')
+      } else {
         console.error('Error fetching lesson data:', error)
       }
-    })
+    }
 
-    return { lesson, flashcards, flipCard, checkDefinition, resetFlashcard }
+    onMounted(fetchLessonData)
+
+    return { lesson, flashcards, flipCard, checkDefinition, resetFlashcard, progress }
   }
 }
 </script>
@@ -256,3 +296,4 @@ button {
   background-color: #007B9A;
 }
 </style>
+
