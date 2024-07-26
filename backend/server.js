@@ -5,12 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  ssl: true,
+  sslValidate: false
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => {
@@ -19,8 +21,8 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Configure CORS
 app.use(cors());
@@ -31,7 +33,7 @@ const lessonRoutes = require('./routes/lessons');
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
 
-// Serve static files from the React frontend app
+// Serve static files from the frontend app
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Anything that doesn't match the above, send back index.html
@@ -48,3 +50,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

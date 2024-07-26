@@ -26,15 +26,12 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ message: 'Invalid email or password' });
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        console.error('Error during password comparison:', err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-      if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
-      res.json({ token });
-    });
+    
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
+    
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+    res.json({ token });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'Error during login', error: error.message });
