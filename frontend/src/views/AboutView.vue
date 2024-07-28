@@ -25,6 +25,9 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  background-color: #f0f8ff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
 }
 
 .content {
@@ -32,11 +35,11 @@ export default {
 }
 
 h1 {
-  color: #2c3e50;
+  color: #ff4500;
 }
 
 h2 {
-  color: #3498db;
+  color: #ff6347;
   margin-top: 2rem;
 }
 
@@ -49,12 +52,14 @@ li {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
   position: relative;
+  color: #4682b4;
 }
 
 li::before {
   content: '✓';
-  color: #2ecc71;
+  color: #ff1493;
   position: absolute;
   left: 0;
 }
 </style>
+
